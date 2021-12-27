@@ -13,15 +13,17 @@
     <script src="../node_modules/blueimp-md5/js/md5.min.js"></script>
 </head>
 
-<body>
+<body id="body">
     <div class="container">
-        <div class="titleBox">
-            <h1 id="title"><span>Marvel</span> characters</h1>
-        </div>
 
-        <!-- <div id="checkboxDiv">
-            <div id="checkbox"></div>
-        </div> -->
+        <label id="switchThemeBox">
+            <input type="checkbox" id="switch" onclick="switch_theme()">
+            <span class="slider round"></span>
+        </label>
+
+        <div class="titleBox">
+            <h1 id="title"><span>Marvel</span> characters<span>.</span></h1>
+        </div>
 
         <!-- <div id="alphabet" onmouseover=""></div> -->
         <div id="herosNameInputBox">

@@ -1,10 +1,20 @@
 const APIURL = "http://gateway.marvel.com/v1/public/";
 const APIPUBLICKEY = "d4509d8741ad3378f24fb6b93f84b6aa";
-// i () + PRIVATE KEY + PUBLIC KEY
+// 1 + PRIVATE KEY + PUBLIC KEY
 const HASH = md5(
   "176ade49434b3426ff16e9e83fe5c952f4825f6d6d4509d8741ad3378f24fb6b93f84b6aa"
 );
-let IMGBOX = document.getElementById("charactersImgBox");
+const IMGBOX = document.getElementById("charactersImgBox");
+
+// SWITCH THEME (LIGHT / DARK) VARIABLES
+let switcher_theme = document.getElementById("switch");
+let body = document.getElementById("body");
+// let charactersImg = document.getElementsByClassName('charactersImg');
+let charactersImg = document.getElementsByTagName("img");
+// var charactersImg = document.querySelectorAll(".charactersImg");
+let title = document.getElementById("title");
+
+let on_page_load = localStorage.getItem("theme") || "";
 
 // console.log(HASH);
 
@@ -65,6 +75,13 @@ Promise.all(promise)
       IMGBOX.append(imgCharacterDiv);
       imgCharacterDiv.append(imgCharactere, infosCharactereBox);
       infosCharactereBox.append(charactereName);
+    }
+
+    // CHANGE CSS POUR THEME DARK
+    if (on_page_load != null && on_page_load === "dark") {
+      for (let i = 0; i < charactersImg.length; i++) {
+        charactersImg[i].style.borderColor = "white";
+      }
     }
   })
   .catch((err) => (console.error = "Erreur de type : " + err));
@@ -128,9 +145,49 @@ function afficherHero(data) {
     imgCharacterDiv.append(imgCharactere, infosCharactereBox);
     infosCharactereBox.append(charactereName);
   }
+
+  // CHANGE CSS POUR THEME DARK
+  if (on_page_load != null && on_page_load === "dark") {
+    for (let i = 0; i < charactersImg.length; i++) {
+      charactersImg[i].style.borderColor = "white";
+    }
+  }
 }
 
 function searchHero() {
   let herosName = HEROSNAME.value;
   request(afficherHero, herosName);
 }
+
+// SWITCH THEME FUNCTION
+if (on_page_load != null && on_page_load === "dark") {
+  switcher_theme.checked = true;
+  body.style.backgroundColor = "rgb(24, 23, 23)";
+  title.style.color = "White";
+}
+
+function switch_theme() {
+  if (switcher_theme.checked) {
+    // STOCK LA VALEUR 'DARK' DANS LA CLE THEME
+    localStorage.setItem("theme", "dark");
+    // RELOAD POUR AVOIR LE THEME DARK
+    window.location.reload();
+    switcher_theme.checked = true;
+    // test();
+  } else {
+    // SUPPRIME CLE + VALEUR (theme + 'dark')
+    window.localStorage.clear();
+    // RELOAD POUR THEME LIGHT
+    window.location.reload();
+    switcher_theme.checked = false;
+  }
+}
+
+// VALIDER INPUT AVEC TOUCHE ENTER
+HEROSNAME.addEventListener("keyup", function(e) {
+  // console.log("Key" + event.key);
+  if (e.key === 'Enter') {
+   e.preventDefault();
+   document.getElementById("btnSearch").click();
+  }
+});
