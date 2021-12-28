@@ -1,8 +1,8 @@
 const APIURL = "http://gateway.marvel.com/v1/public/";
-const APIPUBLICKEY = "d4509d8741ad3378f24fb6b93f84b6aa";
+const APIPUBLICKEY = config.MY_PUBLIC_API_KEY;
 // 1 + PRIVATE KEY + PUBLIC KEY
 const HASH = md5(
-  "176ade49434b3426ff16e9e83fe5c952f4825f6d6d4509d8741ad3378f24fb6b93f84b6aa"
+  `1${config.MY_PRIVATE_API_KEY}${APIPUBLICKEY}`
 );
 const IMGBOX = document.getElementById("charactersImgBox");
 
