@@ -1,4 +1,4 @@
 config.js
 
 #Node_modules
-*Node_modules
+*.node_modules
