@@ -141,10 +141,7 @@ function afficherHero(data) {
     charactereName.setAttribute("id", "charactereName");
     imgCharactere.setAttribute("class", "charactersImg");
     hrefDescription.setAttribute("href", `/PAGES/description.html`);
-    hrefDescription.setAttribute(
-      "onclick",
-      "setSessionItem(this.textContent)"
-    );
+    hrefDescription.setAttribute("onclick", "setSessionItem(this.textContent)");
     if (
       !(
         urlImg.includes("image_not_available") ||
@@ -179,87 +176,101 @@ function searchHero() {
 }
 
 // VALIDER INPUT AVEC TOUCHE ENTER
-HEROSNAME.addEventListener("keyup", function(e) {
-  // console.log("Key" + e.key);
-  if (e.key === 'Enter') {
-   e.preventDefault();
-   document.getElementById("btnSearch").click();
-  }
-});
+if (HEROSNAME) {
+  HEROSNAME.addEventListener("keyup", function (e) {
+    // console.log("Key" + e.key);
+    if (e.key === "Enter") {
+      e.preventDefault();
+      document.getElementById("btnSearch").click();
+    }
+  });
+}
 
-function setSessionItem(name){
+// FUNCTIONS FOR DESCRIPTION PAGE
+// PUT HERO'S NAME IN A SESSION
+function setSessionItem(name) {
   sessionStorage.setItem("nameHero", name);
 }
 
 function afficherDetatails(data) {
   // console.log("name hero " + sessionStorage.getItem("nameHero"));
-let title = document.getElementById("title");
-let description = document.getElementById("description");
-let imgCharactere = document.getElementById("imgDescription");
-let lastModificationDate = document.getElementById("lastModificationDate");
-let comicsList = document.getElementById("comicsList");
-let serieList = document.getElementById("serieList");
-let storiesList = document.getElementById("storiesList");
+  let title = document.getElementById("title");
+  let description = document.getElementById("description");
+  let imgCharactere = document.getElementById("imgDescription");
+  let lastModificationDate = document.getElementById("lastModificationDate");
+  let comicsList = document.getElementById("comicsList");
+  let serieList = document.getElementById("serieList");
+  let storiesList = document.getElementById("storiesList");
 
-// TITLE -> HERO'S NAME
-title.textContent = sessionStorage.getItem("nameHero");
+  // TITLE -> HERO'S NAME
+  title.textContent = sessionStorage.getItem("nameHero");
 
-// LAST MODIFICATION
-lastModificationDate.textContent = `Last Modification : ${data.data.results[0].modified}`;
+  // LAST MODIFICATION
+  lastModificationDate.textContent = `Last Modification : ${data.data.results[0].modified}`;
 
-// URL IMG
-let urlImg = data.data.results[0].thumbnail.path;
-if (!(urlImg.includes("image_not_available") || urlImg.includes("4c002e0305708"))){
-  imgCharactere.setAttribute("src",`${urlImg}/portrait_uncanny.${data.data.results[0].thumbnail.extension}`);
-} else {
-  imgCharactere.setAttribute("src", "../img/inCase.jpg");
-}
-
-// DESCRIPTION
-description.textContent = data.data.results[0].description;
-
-// COMICS LIST
-// console.log(data.data.results[0].comics.items.length)
-for(let i = 0; i < 20; i++){
-  let liComics = document.createElement("li");
-  let liSerie = document.createElement("li");
-  let liStory = document.createElement("li");
-
-  // COMICS
-  if(data.data.results[0].comics.items.length == 0){
-    comicsList.textContent = "0 Comic Book";
-  }else{
-    liComics.textContent = data.data.results[0].comics.items[i].name;
-    comicsList.append(liComics);
+  // URL IMG
+  let urlImg = data.data.results[0].thumbnail.path;
+  if (
+    !(
+      urlImg.includes("image_not_available") || urlImg.includes("4c002e0305708")
+    )
+  ) {
+    imgCharactere.setAttribute(
+      "src",
+      `${urlImg}/portrait_uncanny.${data.data.results[0].thumbnail.extension}`
+    );
+  } else {
+    imgCharactere.setAttribute("src", "../img/inCase.jpg");
   }
 
-  // SERIES
-  if(data.data.results[0].series.items.length == 0){
-    serieList.textContent = "0 Serie";
+  // DESCRIPTION
+  if(data.data.results[0].description){
+    description.textContent = data.data.results[0].description;
   }else{
-    liSerie.textContent = data.data.results[0].series.items[i].name;
-    serieList.append(liSerie);
+    description.textContent = "An hero with some power.";
   }
 
-  // STORIES
-  if(data.data.results[0].stories.items.length == 0){
-    storiesList.textContent = "0 Story";
-  }else{
-    liStory.textContent = `${data.data.results[0].stories.items[i].name} - Type : ${data.data.results[0].stories.items[i].type}`;
-    storiesList.append(liStory);
+  // COMICS LIST
+  // console.log(data.data.results[0].comics.items.length)
+  for (let i = 0; i < 20; i++) {
+    let liComics = document.createElement("li");
+    let liSerie = document.createElement("li");
+    let liStory = document.createElement("li");
+
+    // COMICS
+    if (data.data.results[0].comics.items.length == 0) {
+      comicsList.textContent = "0 Comic Book";
+    } else {
+      liComics.textContent = data.data.results[0].comics.items[i].name;
+      comicsList.append(liComics);
+    }
+
+    // SERIES
+    if (data.data.results[0].series.items.length == 0) {
+      serieList.textContent = "0 Serie";
+    } else {
+      liSerie.textContent = data.data.results[0].series.items[i].name;
+      serieList.append(liSerie);
+    }
+
+    // STORIES
+    if (data.data.results[0].stories.items.length == 0) {
+      storiesList.textContent = "0 Story";
+    } else {
+      liStory.textContent = `${data.data.results[0].stories.items[i].name} - Type : ${data.data.results[0].stories.items[i].type}`;
+      storiesList.append(liStory);
+    }
   }
-}
 }
 function detailsHeros() {
-let name = sessionStorage.getItem("nameHero");
-request(afficherDetatails, name);
+  let name = sessionStorage.getItem("nameHero");
+  request(afficherDetatails, name);
 }
 
 // SWITCH THEME FUNCTION
 if (on_page_load != null && on_page_load === "dark") {
   switcher_theme.checked = true;
   body.style.backgroundColor = "rgb(24, 23, 23)";
-  // titleNameHero.style.color = "White";
   title.style.color = "White";
 }
 
