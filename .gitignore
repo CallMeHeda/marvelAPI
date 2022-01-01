@@ -1,4 +1,4 @@
 config.js
 node_modules/
-public/app/description.js
-public/app/searchByLetter.js
+js/description.js     
+js/searchByLetter.js     
