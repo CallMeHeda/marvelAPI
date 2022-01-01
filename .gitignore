@@ -1,2 +1,4 @@
 config.js
 node_modules/
+src/js/description.js
+src/js/searchByLetter.js

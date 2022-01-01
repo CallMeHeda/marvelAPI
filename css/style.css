@@ -247,8 +247,8 @@ body {
   right: 0;
   bottom: 0;
   background-color: #cccc;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 #switchThemeBox .slider:before {
@@ -259,8 +259,8 @@ body {
   left: 4px;
   bottom: 4px;
   background-color: #dd2852;
-  -webkit-transition: .4s;
-  transition: .4s;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
 }
 
 #switchThemeBox input:checked + .slider {
@@ -298,15 +298,15 @@ body {
       -ms-flex-pack: center;
           justify-content: center;
   text-transform: uppercase;
-  padding: 10px;
+  padding: 5px;
 }
 
-.titleBox #title {
+.titleBox #title, .titleBox #titleNameHero {
   font-size: 40px;
   letter-spacing: 5px;
 }
 
-.titleBox #title span {
+.titleBox #title span, .titleBox #titleNameHero span {
   color: #dd2852;
 }
 
@@ -367,7 +367,22 @@ body {
           backface-visibility: hidden;
 }
 
-#charactersImgBox #imgCharacterDiv #infosCharactereBox #charactereName {
+#charactersImgBox #imgCharacterDiv #infosCharactereBox a {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  width: 100%;
+  height: 100%;
+  text-decoration: none;
+}
+
+#charactersImgBox #imgCharacterDiv #infosCharactereBox a #charactereName {
   color: black;
   font-size: 23px;
   font-weight: 900;
