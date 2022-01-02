@@ -34,7 +34,7 @@ body {
 }
 
 .containerHome #homeBtn {
-  width: 300px;
+  width: 400px;
   height: 86px;
   font-size: 36px;
   font-weight: bold;
@@ -42,6 +42,10 @@ body {
   border: none;
   color: #eee3e3;
   letter-spacing: 2px;
+  text-transform: uppercase;
+  border-radius: 50px;
+  -webkit-box-shadow: 0px 5px 50px 0px #353333;
+          box-shadow: 0px 5px 50px 0px #353333;
 }
 
 .containerHome #homeBtn:hover {
@@ -266,7 +270,7 @@ body {
 }
 
 #charactersImgBox #imgCharacterDiv #infosCharactereBox a #charactereName {
-  color: black;
+  color: #181717;
   font-size: 23px;
   font-weight: 900;
   text-transform: uppercase;
@@ -304,7 +308,7 @@ body {
   margin-right: 10px;
   padding: 5px 10px;
   border-radius: 0;
-  border: 1px solid black;
+  border: 1px solid #181717;
 }
 
 #herosNameInputBox #herosName:focus {
@@ -315,7 +319,7 @@ body {
   border: none;
   background-color: #dd2852;
   padding: 15px;
-  color: #e0dbdb;
+  color: #eee3e3;
   text-transform: uppercase;
   font-weight: bold;
 }

@@ -5,6 +5,7 @@
 body {
   background-color: rgb(238, 227, 227);
 }
+// HOME (INDEX.html)
 .containerHome {
   display: flex;
   flex-flow: row wrap;
@@ -21,7 +22,7 @@ body {
   overflow: hidden;
 
   #homeBtn {
-    width: 300px;
+    width: 400px;
     height: 86px;
     font-size: 36px;
     font-weight: bold;
@@ -29,6 +30,9 @@ body {
     border: none;
     color: #eee3e3;
     letter-spacing: 2px;
+    text-transform: uppercase;
+    border-radius: 50px;
+    box-shadow: 0px 5px 50px 0px #353333;
     &:hover {
       background-color: #c5284d;
     }
@@ -38,6 +42,7 @@ body {
   }
 }
 
+// ////////////////////////////////////////////////////////////////////////////////////////
 .container {
   display: flex;
   flex-flow: column wrap;
@@ -192,7 +197,7 @@ body {
         height: 100%;
         text-decoration: none;
         #charactereName {
-          color: black;
+          color: rgb(24, 23, 23);
           font-size: 23px;
           font-weight: 900;
           text-transform: uppercase;
@@ -224,7 +229,7 @@ body {
     margin-right: 10px;
     padding: 5px 10px;
     border-radius: 0;
-    border: 1px solid black;
+    border: 1px solid rgb(24, 23, 23);
     &:focus {
       outline: none;
     }
@@ -233,7 +238,7 @@ body {
     border: none;
     background-color: #dd2852;
     padding: 15px;
-    color: rgb(224, 219, 219);
+    color: #eee3e3;
     text-transform: uppercase;
     font-weight: bold;
     &:hover {
@@ -261,7 +266,6 @@ body {
       padding: 15px;
       // border: 1px solid red;
       img{
-        // box-shadow: 0 10px 55px 5px rgba(255, 255, 255, 0.445);
         box-shadow: 0 10px 55px 5px rgba(5, 5, 5, 0.445);
         border-radius: 20px;
       }
