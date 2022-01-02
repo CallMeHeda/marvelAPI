@@ -2,98 +2,120 @@ const APIURL = "http://gateway.marvel.com/v1/public/";
 const APIPUBLICKEY = config.MY_PUBLIC_API_KEY;
 // 1 + PRIVATE KEY + PUBLIC KEY
 const HASH = md5(`1${config.MY_PRIVATE_API_KEY}${APIPUBLICKEY}`);
+// console.log(HASH);
+
 const IMGBOX = document.getElementById("charactersImgBox");
 
 // SWITCH THEME (LIGHT / DARK) VARIABLES
 let switcher_theme = document.getElementById("switch");
 let body = document.getElementById("body");
 let charactersImg = document.getElementsByTagName("img");
-// let titleNameHero = document.getElementById("titleNameHero");
 let title = document.getElementById("title");
+let titleDescr = document.getElementsByClassName("title");
+let lastModificationDate = document.getElementById("lastModificationDate");
+let description = document.getElementById("description");
+let listBox = document.getElementsByTagName("ul");
+let counterBox = document.getElementById("counter");
+let pourcentage = document.getElementById("pourcentage");
+let imgDescriptionPage = document.getElementById("imgDescription");
 
 let on_page_load = localStorage.getItem("theme") || "";
 
-// console.log(HASH);
+if (counterBox) {
+  window.onload = function () {
+    let cpt = 0;
+    const interval = setInterval(function () {
+      document.getElementById("container").style.display = "none";
 
-// TABLEAU D'URL
-let promise = [];
-// 1559 données
-for (let i = 0; i < 1600; i += 100) {
-  promise.push(
-    fetch(
-      `${APIURL}characters?&ts=1&apikey=${APIPUBLICKEY}&hash=${HASH}&limit=100&offset=${i}`
-    ).then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error("La requête n'a pas abouti");
+      document.getElementById("pourcentage").textContent = `${cpt}%`;
+      document.getElementById("hr").style.width = `${cpt}%`;
+
+      cpt++;
+
+      if (cpt > 100) {
+        clearInterval(interval);
+        document.getElementById("container").style.display = "flex";
+        document.getElementById("counter").style.display = "none";
       }
-    })
-  );
-}
+    }, 55);
 
-// RANDOM 16 CHARACTERS (16 lignes de 100 data)
-Promise.all(promise)
-  .then(function (data) {
-    console.log(data);
-
-    // 16 RANDOM IMG
-    var randomIMG = Math.round(Math.random() * data.length);
-
-    for (let j = 0; j < data.length; j++) {
-      // IMAGE TAG
-      let imgCharacterDiv = document.createElement("div");
-      let imgCharactere = document.createElement("img");
-      // HREF DESCRIPTON CHARACTER
-      let hrefDescription = document.createElement("a");
-      // NAME TAG
-      let infosCharactereBox = document.createElement("div");
-      let charactereName = document.createElement("p");
-      // URL RANDOM IMG
-      let urlImg = data[j].data.results[randomIMG].thumbnail.path;
-
-      imgCharacterDiv.setAttribute("id", "imgCharacterDiv");
-      infosCharactereBox.setAttribute("id", "infosCharactereBox");
-      charactereName.setAttribute("id", "charactereName");
-      imgCharactere.setAttribute("class", "charactersImg");
-      hrefDescription.setAttribute("href", "/PAGES/description.html");
-      hrefDescription.setAttribute("class", "hrefDescription");
-      hrefDescription.setAttribute(
-        "onclick",
-        "setSessionItem(this.textContent)"
+    // TABLEAU D'URL
+    let promise = [];
+    // 1559 données
+    for (let i = 0; i < 1600; i += 100) {
+      promise.push(
+        fetch(
+          `${APIURL}characters?&ts=1&apikey=${APIPUBLICKEY}&hash=${HASH}&limit=100&offset=${i}`
+        ).then((response) => {
+          if (response.ok) {
+            return response.json();
+          } else {
+            throw new Error("La requête n'a pas abouti");
+          }
+        })
       );
-      // hrefDescription.setAttribute(
-      //   "onmouseover",
-      //   "setSessionItem(this.textContent)"
-      // );
-      if (
-        !(
-          urlImg.includes("image_not_available") ||
-          urlImg.includes("4c002e0305708")
-        )
-      ) {
-        imgCharactere.setAttribute(
-          "src",
-          `${data[j].data.results[randomIMG].thumbnail.path}/standard_xlarge.${data[j].data.results[randomIMG].thumbnail.extension}`
-        );
-      } else {
-        imgCharactere.setAttribute("src", "../img/inCase.jpg");
-      }
-      charactereName.textContent = data[j].data.results[randomIMG].name;
-      IMGBOX.append(imgCharacterDiv);
-      imgCharacterDiv.append(imgCharactere, infosCharactereBox);
-      infosCharactereBox.append(hrefDescription);
-      hrefDescription.append(charactereName);
     }
 
-    // CHANGE CSS POUR THEME DARK
-    if (on_page_load != null && on_page_load === "dark") {
-      for (let i = 0; i < charactersImg.length; i++) {
-        charactersImg[i].style.borderColor = "white";
-      }
-    }
-  })
-  .catch((err) => (console.error = "Erreur de type : " + err));
+    // RANDOM 16 CHARACTERS (16 lignes de 100 data)
+    Promise.all(promise)
+      .then(function (data) {
+        console.log(data);
+
+        // 16 RANDOM IMG
+        var randomIMG = Math.round(Math.random() * data.length);
+
+        for (let j = 0; j < data.length; j++) {
+          // IMAGE TAG
+          let imgCharacterDiv = document.createElement("div");
+          let imgCharactere = document.createElement("img");
+          // HREF DESCRIPTON CHARACTER
+          let hrefDescription = document.createElement("a");
+          // NAME TAG
+          let infosCharactereBox = document.createElement("div");
+          let charactereName = document.createElement("p");
+          // URL RANDOM IMG
+          let urlImg = data[j].data.results[randomIMG].thumbnail.path;
+
+          imgCharacterDiv.setAttribute("id", "imgCharacterDiv");
+          infosCharactereBox.setAttribute("id", "infosCharactereBox");
+          charactereName.setAttribute("id", "charactereName");
+          imgCharactere.setAttribute("class", "charactersImg");
+          hrefDescription.setAttribute("href", "/PAGES/description.html");
+          hrefDescription.setAttribute("class", "hrefDescription");
+          hrefDescription.setAttribute(
+            "onclick",
+            "setSessionItem(this.textContent)"
+          );
+          if (
+            !(
+              urlImg.includes("image_not_available") ||
+              urlImg.includes("4c002e0305708")
+            )
+          ) {
+            imgCharactere.setAttribute(
+              "src",
+              `${data[j].data.results[randomIMG].thumbnail.path}/standard_xlarge.${data[j].data.results[randomIMG].thumbnail.extension}`
+            );
+          } else {
+            imgCharactere.setAttribute("src", "../img/inCase.jpg");
+          }
+          charactereName.textContent = data[j].data.results[randomIMG].name;
+          IMGBOX.append(imgCharacterDiv);
+          imgCharacterDiv.append(imgCharactere, infosCharactereBox);
+          infosCharactereBox.append(hrefDescription);
+          hrefDescription.append(charactereName);
+        }
+
+        // CHANGE CSS POUR THEME DARK
+        if (on_page_load != null && on_page_load === "dark") {
+          for (let i = 0; i < charactersImg.length; i++) {
+            charactersImg[i].style.borderColor = "#eee3e3";
+          }
+        }
+      })
+      .catch((err) => (console.error = "Erreur de type : " + err));
+  };
+}
 
 // RECHERCHE PAR NOM
 const HEROSNAME = document.getElementById("herosName");
@@ -165,7 +187,7 @@ function afficherHero(data) {
   // CHANGE CSS POUR THEME DARK
   if (on_page_load != null && on_page_load === "dark") {
     for (let i = 0; i < charactersImg.length; i++) {
-      charactersImg[i].style.borderColor = "white";
+      charactersImg[i].style.borderColor = "#eee3e3";
     }
   }
 }
@@ -195,9 +217,6 @@ function setSessionItem(name) {
 function afficherDetatails(data) {
   // console.log("name hero " + sessionStorage.getItem("nameHero"));
   let title = document.getElementById("title");
-  let description = document.getElementById("description");
-  let imgCharactere = document.getElementById("imgDescription");
-  let lastModificationDate = document.getElementById("lastModificationDate");
   let comicsList = document.getElementById("comicsList");
   let serieList = document.getElementById("serieList");
   let storiesList = document.getElementById("storiesList");
@@ -206,7 +225,12 @@ function afficherDetatails(data) {
   title.textContent = sessionStorage.getItem("nameHero");
 
   // LAST MODIFICATION
-  lastModificationDate.textContent = `Last Modification : ${data.data.results[0].modified}`;
+  const OPTIONS = { weekday : "long", day : "2-digit", month : "long", year : "numeric" };
+  let date = new Date(data.data.results[0].modified);
+  // console.log(date.toLocaleDateString("en-US", OPTIONS).replace(/, /g, " "))
+
+  // lastModificationDate.textContent = `Last Modification : ${data.data.results[0].modified}`;
+  lastModificationDate.textContent = `Last Modification : ${date.toLocaleDateString("en-US", OPTIONS).replace(/, /g, " ")}`;
 
   // URL IMG
   let urlImg = data.data.results[0].thumbnail.path;
@@ -215,23 +239,24 @@ function afficherDetatails(data) {
       urlImg.includes("image_not_available") || urlImg.includes("4c002e0305708")
     )
   ) {
-    imgCharactere.setAttribute(
+    imgDescriptionPage.setAttribute(
       "src",
       `${urlImg}/portrait_uncanny.${data.data.results[0].thumbnail.extension}`
     );
   } else {
-    imgCharactere.setAttribute("src", "../img/inCase.jpg");
+    imgDescriptionPage.setAttribute("src", "../img/inCase2.jpg");
   }
 
   // DESCRIPTION
-  if(data.data.results[0].description){
+  if (data.data.results[0].description) {
     description.textContent = data.data.results[0].description;
-  }else{
-    description.textContent = "An hero with some power.";
+  } else {
+    description.textContent =
+      "A hero with some power. I can't tell you more. Google it!";
   }
 
-  // COMICS LIST
-  // console.log(data.data.results[0].comics.items.length)
+  // COMICS - SERIES - STORIES LIST
+  console.log(data.data.results[0].comics.items.length);
   for (let i = 0; i < 20; i++) {
     let liComics = document.createElement("li");
     let liSerie = document.createElement("li");
@@ -271,7 +296,27 @@ function detailsHeros() {
 if (on_page_load != null && on_page_load === "dark") {
   switcher_theme.checked = true;
   body.style.backgroundColor = "rgb(24, 23, 23)";
-  title.style.color = "White";
+  title.style.color = "#eee3e3";
+  for (let i = 0; i < titleDescr.length; i++) {
+    titleDescr[i].style.color = "#dd2852";
+  }
+  if (lastModificationDate) {
+    lastModificationDate.style.color = "#eee3e3";
+  }
+  if (pourcentage) {
+    pourcentage.style.color = "#eee3e3";
+  }
+  if (description) {
+    description.style.color = "#eee3e3";
+  }
+  if (listBox) {
+    for (let i = 0; i < listBox.length; i++) {
+      listBox[i].style.color = "#eee3e3";
+    }
+  }
+  if(imgDescriptionPage){
+    imgDescriptionPage.style.boxShadow = "0 10px 55px 5px rgba(255, 255, 255, 0.445)";
+  }
 }
 
 function switch_theme() {
@@ -279,14 +324,40 @@ function switch_theme() {
     // STOCK LA VALEUR 'DARK' DANS LA CLE THEME
     localStorage.setItem("theme", "dark");
     // RELOAD POUR AVOIR LE THEME DARK
-    window.location.reload();
     switcher_theme.checked = true;
+    window.location.reload();
     // test();
   } else {
     // SUPPRIME CLE + VALEUR (theme + 'dark')
     window.localStorage.clear();
     // RELOAD POUR THEME LIGHT
-    window.location.reload();
     switcher_theme.checked = false;
+    window.location.reload();
   }
+}
+
+if (imgDescriptionPage) {
+  imgDescriptionPage.addEventListener("mousemove", moveImg);
+  document.getElementById("imgDescriptionBox").addEventListener("mouseleave", function () {
+    TweenMax.to(imgDescriptionPage, {
+      rotationY: 0,
+      rotationX: 0,
+      ease: Quad.easeOut,
+      transformPerspective: 600,
+      transformOrigin: "0 0",
+    });
+  });
+}
+
+function moveImg(e) {
+  var decimalX = e.clientX / window.innerWidth - 0.5;
+  var decimalY = e.clientY / window.innerHeight - 0.5;
+
+  TweenMax.to(imgDescriptionPage, 0.5, {
+    rotationY: 20 * decimalX,
+    rotationX: 15 * decimalY,
+    ease: Quad.easeOut,
+    transformPerspective: 600,
+    transformOrigin: "50% 50% -200px",
+  });
 }
