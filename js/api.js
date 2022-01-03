@@ -255,18 +255,18 @@ if (HEROSNAME) {
 // FUNCTIONS FOR DESCRIPTION PAGE
 // PUT HERO'S NAME IN A SESSION
 function setSessionItem(name) {
-  sessionStorage.setItem("nameHero", name);
+  localStorage.setItem("nameHero", name);
 }
 
 function afficherDetatails(data) {
-  // console.log("name hero " + sessionStorage.getItem("nameHero"));
+  // console.log("name hero " + localStorage.getItem("nameHero"));
   let title = document.getElementById("title");
   let comicsList = document.getElementById("comicsList");
   let serieList = document.getElementById("serieList");
   let storiesList = document.getElementById("storiesList");
 
   // TITLE -> HERO'S NAME
-  title.textContent = sessionStorage.getItem("nameHero");
+  title.textContent = localStorage.getItem("nameHero");
 
   // LAST MODIFICATION
   const OPTIONS = { weekday : "long", day : "2-digit", month : "long", year : "numeric" };
@@ -332,7 +332,7 @@ function afficherDetatails(data) {
   }
 }
 function detailsHeros() {
-  let name = sessionStorage.getItem("nameHero");
+  let name = localStorage.getItem("nameHero");
   request(afficherDetatails, name);
 }
 
@@ -373,7 +373,8 @@ function switch_theme() {
     // test();
   } else {
     // SUPPRIME CLE + VALEUR (theme + 'dark')
-    window.localStorage.clear();
+    // window.localStorage.clear();
+    localStorage.setItem("theme", "light");
     // RELOAD POUR THEME LIGHT
     switcher_theme.checked = false;
     window.location.reload();
