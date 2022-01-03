@@ -67,6 +67,31 @@ body {
           flex-flow: column wrap;
 }
 
+#prevPageAndSwitch {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+#prevPageAndSwitch #prevPage {
+  margin: 25px 0 15px 25px;
+}
+
+#prevPageAndSwitch #prevPage i {
+  color: #dd2852;
+}
+
+#prevPageAndSwitch #prevPage i:hover {
+  opacity: 0.8;
+}
+
+#prevPageAndSwitch #prevPage a {
+  text-decoration: none;
+}
+
 #switchThemeBox {
   position: relative;
   display: inline-block;
@@ -271,7 +296,7 @@ body {
 
 #charactersImgBox #imgCharacterDiv #infosCharactereBox a #charactereName {
   color: #181717;
-  font-size: 23px;
+  font-size: 22px;
   font-weight: 900;
   text-transform: uppercase;
   text-align: center;
@@ -397,11 +422,10 @@ body {
   display: flex;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-      -ms-flex-flow: row wrap;
-          flex-flow: row wrap;
-  -ms-flex-pack: distribute;
-      justify-content: space-around;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
   padding-bottom: 50px;
+  margin: 0 50px;
 }
 
 #dataDescriptionBox #listBox #comicsBox,
@@ -414,6 +438,12 @@ body {
   -webkit-box-direction: normal;
       -ms-flex-flow: column wrap;
           flex-flow: column wrap;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  -ms-flex-line-pack: center;
+      align-content: center;
+  margin: 5px 20px 0 20px;
 }
 
 #dataDescriptionBox #listBox #comicsBox h3,

@@ -48,6 +48,24 @@ body {
   flex-flow: column wrap;
 }
 
+// PREV ICON
+#prevPageAndSwitch {
+  display: flex;
+  justify-content: space-between;
+
+  #prevPage{
+    margin: 25px 0 15px 25px;
+    i{
+      color: #dd2852;
+      &:hover{
+        opacity: 0.8;
+      }
+    }
+    a{
+      text-decoration: none;
+    }
+  }
+}
 // SWITCH
 #switchThemeBox {
   position: relative;
@@ -107,6 +125,7 @@ body {
     border-radius: 50%;
   }
 }
+
 /* PAGE PERSONNAGES */
 #counter {
   display: flex;
@@ -198,7 +217,7 @@ body {
         text-decoration: none;
         #charactereName {
           color: rgb(24, 23, 23);
-          font-size: 23px;
+          font-size: 22px;
           font-weight: 900;
           text-transform: uppercase;
           text-align: center;
@@ -265,7 +284,7 @@ body {
       justify-content: flex-end;
       padding: 15px;
       // border: 1px solid red;
-      img{
+      img {
         box-shadow: 0 10px 55px 5px rgba(5, 5, 5, 0.445);
         border-radius: 20px;
       }
@@ -285,14 +304,18 @@ body {
 
   #listBox {
     display: flex;
-    flex-flow: row wrap;
-    justify-content: space-around;
+    flex-flow: row nowrap;
+    // justify-content: space-around;
     padding-bottom: 50px;
+    margin: 0 50px;
     #comicsBox,
     #serieBox,
     #storiesBox {
       display: flex;
       flex-flow: column wrap;
+      flex-grow: 1;
+      align-content: center;
+      margin: 5px 20px 0 20px;
       h3 {
         font-size: 20px;
         color: #dd2852;

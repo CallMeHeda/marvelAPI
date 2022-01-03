@@ -62,9 +62,13 @@ if (counterBox) {
         console.log(data);
 
         // 16 RANDOM IMG
-        var randomIMG = Math.round(Math.random() * data.length);
+        // var randomIMG = Math.round((Math.random() * data.length));
+        var randomIMG = Math.round(Math.random() * 100);
+        var randomIMGLastLine = Math.round(Math.random() * 58);
+        // console.log(randomIMG)
+        // console.log(randomIMGLastLine)
 
-        for (let j = 0; j < data.length; j++) {
+        for (let j = 0; j < data.length-1; j++) {
           // IMAGE TAG
           let imgCharacterDiv = document.createElement("div");
           let imgCharactere = document.createElement("img");
@@ -106,6 +110,48 @@ if (counterBox) {
           hrefDescription.append(charactereName);
         }
 
+        // :::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+        // IMAGE TAG
+        let imgCharacterDiv = document.createElement("div");
+        let imgCharactere = document.createElement("img");
+        // HREF DESCRIPTON CHARACTER
+        let hrefDescription = document.createElement("a");
+        // NAME TAG
+        let infosCharactereBox = document.createElement("div");
+        let charactereName = document.createElement("p");
+        // URL RANDOM IMG
+        let urlImg = data[15].data.results[randomIMGLastLine].thumbnail.path;
+
+        imgCharacterDiv.setAttribute("id", "imgCharacterDiv");
+        infosCharactereBox.setAttribute("id", "infosCharactereBox");
+        charactereName.setAttribute("id", "charactereName");
+        imgCharactere.setAttribute("class", "charactersImg");
+        hrefDescription.setAttribute("href", "/PAGES/description.html");
+        hrefDescription.setAttribute("class", "hrefDescription");
+        hrefDescription.setAttribute(
+          "onclick",
+          "setSessionItem(this.textContent)"
+        );
+
+        if (
+          !(
+            urlImg.includes("image_not_available") ||
+            urlImg.includes("4c002e0305708")
+          )
+        ) {
+          imgCharactere.setAttribute(
+            "src",
+            `${data[15].data.results[randomIMGLastLine].thumbnail.path}/standard_xlarge.${data[15].data.results[randomIMGLastLine].thumbnail.extension}`
+          );
+        } else {
+          imgCharactere.setAttribute("src", "../img/inCase.jpg");
+        }
+        charactereName.textContent = data[15].data.results[randomIMGLastLine].name;
+        IMGBOX.append(imgCharacterDiv);
+        imgCharacterDiv.append(imgCharactere, infosCharactereBox);
+        infosCharactereBox.append(hrefDescription);
+        hrefDescription.append(charactereName);
+
         // CHANGE CSS POUR THEME DARK
         if (on_page_load != null && on_page_load === "dark") {
           for (let i = 0; i < charactersImg.length; i++) {
@@ -127,14 +173,12 @@ function request(callback, herosName) {
     if (xhr.readyState == 4 && xhr.status == 200) {
       let myJson = JSON.parse(xhr.responseText);
       callback(myJson);
-    } else {
-      console.log(xhr.status + " | " + xhr.readyState);
-    }
+    } 
   };
 
   xhr.open(
     "GET",
-    `${APIURL}characters?nameStartsWith=${herosName}&ts=1&apikey=${APIPUBLICKEY}&hash=${HASH}`,
+    `${APIURL}characters?nameStartsWith=${herosName}&ts=1&apikey=${APIPUBLICKEY}&hash=${HASH}&limit=100`,
     true
   );
   xhr.send();
@@ -256,7 +300,7 @@ function afficherDetatails(data) {
   }
 
   // COMICS - SERIES - STORIES LIST
-  console.log(data.data.results[0].comics.items.length);
+  // console.log(data.data.results[0].comics.items.length);
   for (let i = 0; i < 20; i++) {
     let liComics = document.createElement("li");
     let liSerie = document.createElement("li");
