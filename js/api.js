@@ -10,6 +10,7 @@ const IMGBOX = document.getElementById("charactersImgBox");
 let switcher_theme = document.getElementById("switch");
 let body = document.getElementById("body");
 let charactersImg = document.getElementsByTagName("img");
+let heroEmpty = document.getElementById("heroEmpty");
 let title = document.getElementById("title");
 let titleDescr = document.getElementsByClassName("title");
 let lastModificationDate = document.getElementById("lastModificationDate");
@@ -19,7 +20,7 @@ let counterBox = document.getElementById("counter");
 let pourcentage = document.getElementById("pourcentage");
 let imgDescriptionPage = document.getElementById("imgDescription");
 
-let on_page_load = localStorage.getItem("theme") || "";
+let on_page_load = localStorage.getItem("theme");
 
 if (counterBox) {
   window.onload = function () {
@@ -68,7 +69,7 @@ if (counterBox) {
         // console.log(randomIMG)
         // console.log(randomIMGLastLine)
 
-        for (let j = 0; j < data.length-1; j++) {
+        for (let j = 0; j < data.length - 1; j++) {
           // IMAGE TAG
           let imgCharacterDiv = document.createElement("div");
           let imgCharactere = document.createElement("img");
@@ -146,14 +147,15 @@ if (counterBox) {
         } else {
           imgCharactere.setAttribute("src", "../img/inCase.jpg");
         }
-        charactereName.textContent = data[15].data.results[randomIMGLastLine].name;
+        charactereName.textContent =
+          data[15].data.results[randomIMGLastLine].name;
         IMGBOX.append(imgCharacterDiv);
         imgCharacterDiv.append(imgCharactere, infosCharactereBox);
         infosCharactereBox.append(hrefDescription);
         hrefDescription.append(charactereName);
 
         // CHANGE CSS POUR THEME DARK
-        if (on_page_load != null && on_page_load === "dark") {
+        if (on_page_load === "dark") {
           for (let i = 0; i < charactersImg.length; i++) {
             charactersImg[i].style.borderColor = "#eee3e3";
           }
@@ -173,7 +175,7 @@ function request(callback, herosName) {
     if (xhr.readyState == 4 && xhr.status == 200) {
       let myJson = JSON.parse(xhr.responseText);
       callback(myJson);
-    } 
+    }
   };
 
   xhr.open(
@@ -228,8 +230,20 @@ function afficherHero(data) {
     hrefDescription.append(charactereName);
   }
 
+  if (data.data.results.length == 0) {
+    let heroEmpty = document.createElement("p");
+
+    heroEmpty.setAttribute("id", "heroEmpty");
+    heroEmpty.textContent = "This hero doesn't exist, try again!";
+    IMGBOX.appendChild(heroEmpty);
+    // CHANGE CSS POUR THEME DARK
+    if (on_page_load === "dark") {
+      heroEmpty.style.color = "#eee3e3";
+    }
+  }
+
   // CHANGE CSS POUR THEME DARK
-  if (on_page_load != null && on_page_load === "dark") {
+  if (on_page_load === "dark") {
     for (let i = 0; i < charactersImg.length; i++) {
       charactersImg[i].style.borderColor = "#eee3e3";
     }
@@ -269,12 +283,19 @@ function afficherDetatails(data) {
   title.textContent = localStorage.getItem("nameHero");
 
   // LAST MODIFICATION
-  const OPTIONS = { weekday : "long", day : "2-digit", month : "long", year : "numeric" };
+  const OPTIONS = {
+    weekday: "long",
+    day: "2-digit",
+    month: "long",
+    year: "numeric",
+  };
   let date = new Date(data.data.results[0].modified);
   // console.log(date.toLocaleDateString("en-US", OPTIONS).replace(/, /g, " "))
 
   // lastModificationDate.textContent = `Last Modification : ${data.data.results[0].modified}`;
-  lastModificationDate.textContent = `Last Modification : ${date.toLocaleDateString("en-US", OPTIONS).replace(/, /g, " ")}`;
+  lastModificationDate.textContent = `Last Modification : ${date
+    .toLocaleDateString("en-US", OPTIONS)
+    .replace(/, /g, " ")}`;
 
   // URL IMG
   let urlImg = data.data.results[0].thumbnail.path;
@@ -337,7 +358,7 @@ function detailsHeros() {
 }
 
 // SWITCH THEME FUNCTION
-if (on_page_load != null && on_page_load === "dark") {
+if (on_page_load === "dark") {
   switcher_theme.checked = true;
   body.style.backgroundColor = "rgb(24, 23, 23)";
   title.style.color = "#eee3e3";
@@ -358,10 +379,20 @@ if (on_page_load != null && on_page_load === "dark") {
       listBox[i].style.color = "#eee3e3";
     }
   }
-  if(imgDescriptionPage){
-    imgDescriptionPage.style.boxShadow = "0 10px 55px 5px rgba(255, 255, 255, 0.445)";
+  if (imgDescriptionPage) {
+    imgDescriptionPage.style.boxShadow =
+      "0 10px 55px 5px rgba(255, 255, 255, 0.445)";
   }
 }
+
+// ACTIVE CHANGEMENT THEME (TOUCHE *)
+document.body.addEventListener("keyup", function (e) {
+  // console.log("Key " + e.key);
+  if (e.key === "*") {
+    e.preventDefault();
+    document.getElementById("switch").click();
+  }
+});
 
 function switch_theme() {
   if (switcher_theme.checked) {
@@ -382,27 +413,32 @@ function switch_theme() {
 }
 
 if (imgDescriptionPage) {
-  imgDescriptionPage.addEventListener("mousemove", moveImg);
-  document.getElementById("imgDescriptionBox").addEventListener("mouseleave", function () {
-    TweenMax.to(imgDescriptionPage, {
-      rotationY: 0,
-      rotationX: 0,
-      ease: Quad.easeOut,
-      transformPerspective: 600,
-      transformOrigin: "0 0",
+  document
+    .getElementById("imgAndDescription")
+    .addEventListener("mousemove", moveImg);
+  document
+    .getElementById("imgAndDescription")
+    .addEventListener("mouseleave", function () {
+      TweenMax.to(imgDescriptionPage, 2, {
+        rotationY: 0,
+        rotationX: 0,
+        ease: Quad.easeOut,
+        transformPerspective: 600,
+        transformOrigin: "0 0",
+      });
     });
-  });
 }
 
 function moveImg(e) {
   var decimalX = e.clientX / window.innerWidth - 0.5;
   var decimalY = e.clientY / window.innerHeight - 0.5;
+  // console.log(decimalX)
 
   TweenMax.to(imgDescriptionPage, 0.5, {
     rotationY: 20 * decimalX,
-    rotationX: 15 * decimalY,
+    rotationX: 20 * decimalY,
     ease: Quad.easeOut,
-    transformPerspective: 600,
-    transformOrigin: "50% 50% -200px",
+    transformPerspective: 500,
+    transformOrigin: "50% 50% -500px",
   });
 }

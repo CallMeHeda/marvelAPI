@@ -246,7 +246,7 @@ body {
 }
 
 #charactersImgBox #imgCharacterDiv .charactersImg {
-  border: 10px double black;
+  border: 10px double #181717;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -314,6 +314,13 @@ body {
   border: 10px double transparent;
 }
 
+#charactersImgBox #heroEmpty {
+  font-size: 50px;
+  color: #181717;
+  margin-top: 2%;
+  letter-spacing: 1px;
+}
+
 #herosNameInputBox {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -370,7 +377,7 @@ body {
           flex-flow: column wrap;
 }
 
-#dataDescriptionBox .imgAndDescription {
+#dataDescriptionBox #imgAndDescription {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -381,36 +388,41 @@ body {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-  margin: 100px;
+  margin: 100px 0;
+  padding: 35px 0;
 }
 
-#dataDescriptionBox .imgAndDescription #imgDescriptionBox {
+#dataDescriptionBox #imgAndDescription #imgDescriptionBox {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-pack: end;
-      -ms-flex-pack: end;
-          justify-content: flex-end;
-  padding: 15px;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  margin-right: 50px;
 }
 
-#dataDescriptionBox .imgAndDescription #imgDescriptionBox img {
+#dataDescriptionBox #imgAndDescription #imgDescriptionBox img {
   -webkit-box-shadow: 0 10px 55px 5px rgba(5, 5, 5, 0.445);
           box-shadow: 0 10px 55px 5px rgba(5, 5, 5, 0.445);
   border-radius: 20px;
 }
 
-#dataDescriptionBox .imgAndDescription #descriptionBox {
+#dataDescriptionBox #imgAndDescription #descriptionBox {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
   color: #181717;
+  margin: 0 50px;
 }
 
-#dataDescriptionBox .imgAndDescription #descriptionBox p {
+#dataDescriptionBox #imgAndDescription #descriptionBox p {
   text-align: center;
   letter-spacing: 1px;
   font-size: 20px;

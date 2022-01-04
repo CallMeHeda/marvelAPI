@@ -53,15 +53,15 @@ body {
   display: flex;
   justify-content: space-between;
 
-  #prevPage{
+  #prevPage {
     margin: 25px 0 15px 25px;
-    i{
+    i {
       color: #dd2852;
-      &:hover{
+      &:hover {
         opacity: 0.8;
       }
     }
-    a{
+    a {
       text-decoration: none;
     }
   }
@@ -188,7 +188,7 @@ body {
     margin: 15px;
 
     .charactersImg {
-      border: 10px double black;
+      border: 10px double rgb(24, 23, 23);
       display: flex;
       width: 100%;
       height: auto;
@@ -235,6 +235,12 @@ body {
       border: 10px double transparent;
     }
   }
+  #heroEmpty {
+    font-size: 50px;
+    color: rgb(24, 23, 23);
+    margin-top: 2%;
+    letter-spacing: 1px;
+  }
 }
 
 // INPUT
@@ -274,16 +280,18 @@ body {
 #dataDescriptionBox {
   display: flex;
   flex-flow: column wrap;
-  .imgAndDescription {
+  #imgAndDescription {
     display: flex;
     flex-direction: row-reverse;
     justify-content: center;
-    margin: 100px;
+    margin: 100px 0;
+    padding: 35px 0;
+    // border: 1px solid red;
     #imgDescriptionBox {
       display: flex;
-      justify-content: flex-end;
-      padding: 15px;
-      // border: 1px solid red;
+      justify-content: center;
+      margin-right: 50px;
+      // flex-grow: 1;
       img {
         box-shadow: 0 10px 55px 5px rgba(5, 5, 5, 0.445);
         border-radius: 20px;
@@ -292,7 +300,10 @@ body {
     #descriptionBox {
       display: flex;
       align-items: center;
+      justify-content: center;
       color: rgb(24, 23, 23);
+      margin: 0 50px;
+      // flex-grow: 1;
       // margin: 20px 50px 0 50px;
       p {
         text-align: center;
