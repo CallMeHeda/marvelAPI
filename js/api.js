@@ -230,7 +230,7 @@ function afficherHero(data) {
     hrefDescription.append(charactereName);
   }
 
-  if (data.data.results.length == 0) {
+  if (data.data.results.length === 0) {
     let heroEmpty = document.createElement("p");
 
     heroEmpty.setAttribute("id", "heroEmpty");

@@ -1,4 +1,5 @@
 config.js
 node_modules/
 js/description.js     
-js/searchByLetter.js     
+js/searchByLetter.js
+.env
